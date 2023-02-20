@@ -1,4 +1,5 @@
 const cards = document.querySelectorAll('.card');
+let contadorCartasViradas = 0;
 let virouCarta = false;
 let primeiraCarta, segundaCarta;
 let travar = false;
@@ -28,12 +29,13 @@ function verificarIguais() {
     desvirarCartas();
 }
 
-
 function desabilitarCartas() {
     primeiraCarta.removeEventListener('click', virarCarta);
     segundaCarta.removeEventListener('click', virarCarta);
-
-    resetarTabuleiro();
+    contadorCartasViradas++;
+    if (contadorCartasViradas == 6) {
+    reiniciar();
+    }
 }
 
 function desvirarCartas() {
@@ -62,3 +64,14 @@ function resetarTabuleiro() {
 cards.forEach((card) => {
     card.addEventListener('click', virarCarta)
 });
+
+function reiniciar() {
+    setTimeout(() => {
+        cards.forEach((card) => {
+            card.addEventListener('click', virarCarta);
+            card.classList.remove('flip');
+        });
+        contadorCartasViradas = 0;
+    }, 3000
+    )
+}
